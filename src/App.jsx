@@ -3,6 +3,7 @@ import './App.css'
 import NavBar from './Components/NavBar'
 import Home from './Pages/Home'
 import Show from './Pages/Show'
+import Four0Four from './Components/Four0Four'
 
 function App() { 
   
@@ -12,6 +13,7 @@ function App() {
         <Routes>
           <Route path='/logs' element={<Home/>}/>
           <Route path='/logs/:id' element={<Show/>}/>
+          <Route path='*' element={<Four0Four/>}/>
         </Routes>
       </div>
   )
