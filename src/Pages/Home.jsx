@@ -2,10 +2,11 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 const Home = () => {
+    const API = import.meta.env.VITE_BASE_URL
     const [captainLogs, setCaptainLogs] = useState([])
 
     useEffect(() => {
-        fetch('http://localhost:9999/logs')
+        fetch(API)
         .then(res => res.json())
         .then(res => {
             setCaptainLogs(res)
