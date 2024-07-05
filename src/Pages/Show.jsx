@@ -1,10 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom'
+import { Link, useParams, useNavigate } from 'react-router-dom'
 
 const Show = () => {
     const API = import.meta.env.VITE_BASE_URL
-    const [captainDetails, setCaptainDetails] = useState(null)
+    const navigate = useNavigate()
     const { id } = useParams()
+    const [captainDetails, setCaptainDetails] = useState(null)
+
+    const handleDelete = () => {
+        fetch(`${API}/${id}`, {
+            method: 'DELETE'
+        })
+            .then(res => res.json())
+            .then(res => {
+                navigate('/logs')
+            })
+            .catch(err => console.error(err))
+    }
 
     useEffect(() => {
         fetch(`${API}/${id}`)
@@ -13,12 +25,19 @@ const Show = () => {
             .catch(err => console.error(err))
     }, [])
 
+    if(!captainDetails) return <div>Loading...</div>
     return (
         <div>
             { captainDetails && 
                 <div>
                     <h3>Meet Captain {captainDetails.captainName}!</h3>
-                    <h5>Born in the Year {captainDetails.yearBorn}, she's known for: {captainDetails.knownFor}</h5>
+                    <h5>Born in the Year {captainDetails.yearBorn}</h5>
+                    <h4>Something I love about her story: {captainDetails.somethingILoveAboutHer}</h4>
+                    <Link to={`/logs/${id}/edit`}>
+                        <button>Edit</button>
+                    </Link>
+                    <br/>
+                    <button onClick={handleDelete}>Delete</button>
                 </div>
             }
         </div>
