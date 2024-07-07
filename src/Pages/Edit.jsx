@@ -11,13 +11,13 @@ const Edit = () => {
         yearsAlive: '',
         culture: '',
         timePeriod: '',
-        // bornIntoMoney: false,
+        is_bornIntoMoney: false,
         title: '',
         whyPiracy: '',
         somethingILoveAboutHer: '',
         knownFor: '',        
         storyEnds: '',
-        is_bornIntoMoney: false
+        // is_bornIntoMoney: false
     })
 
 useEffect(() => {
@@ -29,16 +29,18 @@ useEffect(() => {
 
 const handleChange = (e) => {
     setEditedLog((prevState) => {
-        return { ...prevState, [e.target.name]: [e.target.value] }
+        return { ...prevState, [e.target.name]: e.target.value }
     })
 }
 
 const handleCheckBox = (e) => {
-    setEditedLog((prevState) => {
-        const important = !editedLog.is_bornIntoMoney
-        return { ...prevState, is_bornIntoMoney: important }
-    })
+    setEditedLog((prevState) => { //setters //asynchronous //we console.log before state finished updating 
+        // const important = !editedLog.is_bornIntoMoney
+        return { ...prevState,  [e.target.name]: e.target.checked }
+    }) 
+    console.log("edit", editedLog) // avoid trying to use the state in the function that sets/updates the state. we don't have access to the new value yet.
 }
+console.log(editedLog)
 
 const handleSubmit = (e) => {
     e.preventDefault()
@@ -51,7 +53,6 @@ const handleSubmit = (e) => {
     })
         .then(res => res.json())
         .then(res => {
-            console.log(res)
             navigate(`/logs/${id}`)
         })
         .catch(err => console.error(err))
@@ -72,7 +73,7 @@ const handleSubmit = (e) => {
                 />
                 <br/>
                 <input 
-                    type="text" 
+                    type="number" 
                     placeholder='Birth Year'
                     name="yearBorn"
                     value={editedLog.yearBorn}
@@ -80,7 +81,7 @@ const handleSubmit = (e) => {
                 />
                 <br/>
                 <input 
-                    type="text" 
+                    type="number" 
                     placeholder='Years Alive' // idea: Death Year entered so yearsAlive is calculated and updated in back-end data once submitted 
                     name="yearsAlive"
                     value={editedLog.yearsAlive}
@@ -142,11 +143,12 @@ const handleSubmit = (e) => {
                     value={editedLog.storyEnds}
                     onChange={handleChange}
                 />
-                <br/>
+                    <br/>
                   <input 
                     type="checkbox"
                     id="bornIntoMoney"
-                    checked={editedLog.bornIntoMoney}
+                    name="is_bornIntoMoney"
+                    checked={editedLog.is_bornIntoMoney}
                     onChange={handleCheckBox}
                 />
                 <label htmlFor="bornIntoMoney">Born Into Money</label>

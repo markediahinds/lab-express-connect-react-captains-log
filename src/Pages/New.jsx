@@ -13,13 +13,13 @@ const New = () => {
         yearsAlive: '',
         culture: '',
         timePeriod: '',
-        // bornIntoMoney: false,
+        is_bornIntoMoney: false,
         title: '',
         whyPiracy: '',
         somethingILoveAboutHer: '',
         knownFor: '',        
         storyEnds: '',
-        is_bornIntoMoney: false
+        // is_bornIntoMoney: false
     })
 
     
@@ -31,8 +31,8 @@ const New = () => {
 
     const handleCheckBox = (e) => {
         setNewLog((prevState) => {
-            const bornIntoMoney = !newLog.bornIntoMoney
-            return { ...prevState, is_bornIntoMoney: bornIntoMoney }
+            // const bornIntoMoney = !newLog.bornIntoMoney
+            return { ...prevState, [e.target.name]: e.target.checked }
         })
     }
 
@@ -135,14 +135,14 @@ const New = () => {
                     type="text"
                     placeholder="Story end?" // How does their story end
                     name="storyEnds"
-                    value={newLog.storyEnds}
                     onChange={handleChange}
                 />
                 <br/>
                   <input 
                     type="checkbox"
                     id="bornIntoMoney"
-                    checked={newLog.bornIntoMoney}
+                    name="is_bornIntoMoney"
+                    checked={newLog.is_bornIntoMoney}
                     onChange={handleCheckBox}
                 />
                 <label htmlFor="bornIntoMoney">Born Into Money</label>
